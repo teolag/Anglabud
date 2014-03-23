@@ -1,0 +1,47 @@
+2014-01-26 00:11:15    
+currencyCode=SEK&
+senderEmail=g%c3%b6ran.karlsson%40teodor.se&
+custom=&
+trackingId=110&
+fundingList.fundingConstraint(0).constraint=BANK&
+fundingList.fundingConstraint(1).constraint=CREDITCARD&
+purchaseId=3703285&
+type=TRANSFER&
+status=COMPLETED&
+token=12793642-64fe-474d-8054-c9ef1ba8334b&
+receiverList.receiver(0).email=testagent-1%40payson.se&
+receiverList.receiver(0).amount=150.00&
+orderItemList.orderItem(0).description=%c3%84nglabud&
+orderItemList.orderItem(0).unit=&
+orderItemList.orderItem(0).unitPrice=120.0000&
+orderItemList.orderItem(0).quantity=1.00&
+orderItemList.orderItem(0).taxPercentage=0.250000&
+orderItemList.orderItem(0).sku=a14t&
+receiverFee=7.5000&
+HASH=66f56aeccaaf66b0bd9fe629c98766f8
+
+
+
+2014-03-22 21:02:25    
+currencyCode=SEK&
+senderEmail=lennart.karlsson%40teodor.se&
+custom=&
+trackingId=127&
+fundingList.fundingConstraint(0).constraint=BANK&
+fundingList.fundingConstraint(1).constraint=CREDITCARD&
+purchaseId=3706454&
+type=TRANSFER&
+status=COMPLETED&
+token=f6b920cf-7308-4693-a566-fa15a70c6f6d&
+receiverList.receiver(0).email=testagent-1%40payson.se&
+receiverList.receiver(0).amount=150.00&
+orderItemList.orderItem(0).description=%c3%84nglabud&
+orderItemList.orderItem(0).unit=&
+orderItemList.orderItem(0).unitPrice=120.0000&
+orderItemList.orderItem(0).quantity=1.00&
+orderItemList.orderItem(0).taxPercentage=0.250000&
+orderItemList.orderItem(0).sku=a4t&
+receiverFee=7.5000&
+HASH=3967eef94f12c99e32cda6e12e845377
+
+2014-03-22 22:22:00    currencyCode=SEK&senderEmail=r%c3%a5ger.frideborg%40teodor.se&custom=&trackingId=128&fundingList.fundingConstraint(0).constraint=BANK&fundingList.fundingConstraint(1).constraint=CREDITCARD&purchaseId=3706455&type=TRANSFER&status=COMPLETED&token=3dfe555d-6488-4899-aa4e-10e79563effc&receiverList.receiver(0).email=testagent-1%40payson.se&receiverList.receiver(0).amount=150.00&orderItemList.orderItem(0).description=%c3%84nglabud&orderItemList.orderItem(0).unit=&orderItemList.orderItem(0).unitPrice=120.0000&orderItemList.orderItem(0).quantity=1.00&orderItemList.orderItem(0).taxPercentage=0.250000&orderItemList.orderItem(0).sku=a3t1&receiverFee=7.5000&HASH=cd4d15c46be7a1ee84d3a7bc89a78a652014-03-23 20:47:55    currencyCode=SEK&senderEmail=berit.al%40teodor.se&custom=&trackingId=137&fundingList.fundingConstraint(0).constraint=BANK&fundingList.fundingConstraint(1).constraint=CREDITCARD&purchaseId=3706484&type=TRANSFER&status=COMPLETED&token=c341ddc3-b5c9-4d14-839c-eb4b646898c3&receiverList.receiver(0).email=payson%40teodor.se&receiverList.receiver(0).amount=150.00&orderItemList.orderItem(0).description=%c3%84nglabud&orderItemList.orderItem(0).unit=&orderItemList.orderItem(0).unitPrice=120.0000&orderItemList.orderItem(0).quantity=1.00&orderItemList.orderItem(0).taxPercentage=0.250000&orderItemList.orderItem(0).sku=a11t1&receiverFee=7.5000&HASH=2dfbf2e27b7a585db2fc1fc0f4e4833e

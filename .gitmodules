@@ -1,0 +1,6 @@
+[submodule "classes/PaysonAPI"]
+	path = classes/PaysonAPI
+	url = git@github.com:PaysonAktiebolag/api-integration-php.git
+[submodule "classes/DatabasePDO"]
+	path = classes/DatabasePDO
+	url = git@github.com:teolag/DatabasePDO
