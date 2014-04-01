@@ -11,14 +11,11 @@ require ROOT . "classes/PaysonAPI/lib/paysonapi.php";
 
 $db = new DatabasePDO($config['db']['server'],$config['db']['username'],$config['db']['password'],$config['db']['name']);
 
-$test = false;
-$test = true;
 
-
-if($test) {
+if($config['payson']['testAPI']) {
 	$config['payson']['agentID'] = "4";
 	$config['payson']['md5Key'] = "2acab30d-fe50-426f-90d7-8c60a7eb31d4";
-	$config['receiverEmail']['agentID'] = "testagent-1@payson.se";
+	$config['payson']['receiverEmail'] = "testagent-1@payson.se";
 }
 
 

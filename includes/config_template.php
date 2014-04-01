@@ -1,4 +1,4 @@
-<?
+<?php
 $config = array(
 	"salt" => "",
 	"db" => array(
@@ -8,6 +8,7 @@ $config = array(
 		"name" => ""
 	),
 	"payson" => array(
+		"testAPI" => true/false,
 		"agentID" => "",
 		"md5Key" => "",
 		"receiverEmail" => "",

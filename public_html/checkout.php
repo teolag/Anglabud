@@ -72,7 +72,7 @@ foreach($orderItems as $item) {
 }
 
 $credentials = new PaysonCredentials($config['payson']['agentID'], $config['payson']['md5Key']);
-$api = new PaysonApi($credentials, $test);
+$api = new PaysonApi($credentials, $config['payson']['testAPI']);
 
 
 $receiver = new Receiver($config['payson']['receiverEmail'], $amountToReceive);
