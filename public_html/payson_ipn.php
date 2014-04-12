@@ -12,7 +12,7 @@ require '../includes/init.php';
 // Set up API
 $credentials = new PaysonCredentials($config['payson']['agentID'], $config['payson']['md5Key']);
 
-$api = new PaysonApi($credentials, $test);
+$api = new PaysonApi($credentials, $config['payson']['testAPI']);
 
 // Validate the request
 $response = $api->validate($postData);

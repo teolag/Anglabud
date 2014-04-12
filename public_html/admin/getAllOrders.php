@@ -25,7 +25,8 @@ foreach($rows as $r) {
 	} else {
 		$order = array();
 	}
-		
+	
+	$order['order_id'] = dec2angel($r['order_nr']);
 	$order['first_name'] = $r['buyer_firstname'];
 	$order['last_name'] = $r['buyer_lastname'];
 	$order['email'] = $r['buyer_email'];

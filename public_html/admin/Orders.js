@@ -1,5 +1,5 @@
 var Orders = (function(){
-	var orders, ordersToPrint, table,
+	var orders, ordersToPrint, tableBody,
 	messages={
 		1:"Beställning lagd, inväntar betalning",
 		2:"Betalning mottagen, bearbetar beställning",
@@ -13,7 +13,7 @@ var Orders = (function(){
 
 	init = function() {
 		console.log("init orders");
-		table = document.getElementById("tableOrders");
+		tableBody = document.querySelector("#tableOrders tbody");
 		orderFilters = document.getElementById("orderFilters");
 		orderFilters.addEventListener("click", filterAction, false);
 	},
@@ -69,6 +69,7 @@ var Orders = (function(){
 		orders = e.target.response;
 		ordersToPrint = Object.keys(orders);
 		ordersToPrint = ordersToPrint.filter(filterOrders);
+		ordersToPrint = ordersToPrint.sort(sortOrders);
 		printOrders();		
 	},
 	
@@ -83,15 +84,25 @@ var Orders = (function(){
 		
 		return true;
 	},
+	
+	sortOrders = function(id1, id2) {
+		var o1 = orders[id1];
+		var o2 = orders[id2];
+		
+		var ts1 = new Date(o1.statuses[0].date);
+		var ts2 = new Date(o2.statuses[0].date);
+		
+		return ts2 - ts1;
+	},
 
 
 
 	printOrders = function() {		
-		table.innerHTML="";
+		tableBody.innerHTML="";
 		for(var i=0; i<ordersToPrint.length; i++) {
 			var order = orders[ordersToPrint[i]];
 			
-			console.log(order);
+			//console.log(order);
 			
 			
 			var tsCreated, tsLatest=order.statuses[0].date, latestMessageId=order.statuses[0].message_id;
@@ -106,6 +117,10 @@ var Orders = (function(){
 			
 			var td = document.createElement("TD");
 			td.textContent = ordersToPrint[i];
+			tr.appendChild(td);
+			
+			var td = document.createElement("TD");
+			td.textContent = order.order_id;
 			tr.appendChild(td);
 			
 			var td = document.createElement("TD");
@@ -136,7 +151,7 @@ var Orders = (function(){
 			td.textContent = tsLatest;
 			tr.appendChild(td);
 			
-			table.appendChild(tr);			
+			tableBody.appendChild(tr);			
 		}
 	};
 	

@@ -59,10 +59,12 @@ fieldset,
 	margin-bottom: 1em;
 }
 
+/*
 fieldset textarea,
 fieldset input {
 	width: 19.5em;
 }
+*/
 fieldset input.half {
 	width: 9em;
 }
@@ -74,7 +76,7 @@ fieldset textarea {
 	height: 5em;
 }
 
-label {
+label.before {
 	display: inline-block;
 	width: 6em;
 }
@@ -84,7 +86,7 @@ label.full {
 	margin-top: 1em;
 }
 
-input.invalid {
+.invalid {
 	border: 2px solid #AD4545;
 }
 
@@ -97,15 +99,48 @@ input.invalid {
 #imgAngel {
 	float: left;
 	border-radius: 0.5em;
-	box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 	margin-right: 1em;
+	border: 3px solid white;
+	-webkit-transform: rotate(-2deg);
+	cursor: pointer;
+}
+
+#checkout {
+	text-align: right;
+}
+
+#totalText {
+	vertical-align: middle;
+	margin-right: 1em;
+}
+#totalPrice {
+	font-size: 20px;
+	line-height: 40px;
+	margin-right: 1em;
+	vertical-align: middle;
 }
 
 #btnSubmitOrder {
-	float: right;
+	background-image: url(https://www.payson.se/sites/all/files/images/external/payson_betala_direkt_btn.png);
+	background-color: transparent;
+	border: 0;
+	width: 170px;
+	height: 43px;
+	vertical-align: middle;
 }
+
 #btnChooseAngel {
 	float: right;
+	clear: both;
+	background-color: #96A8B9;
+	padding: 0.5em 1em;
+	box-shadow: 1px 2px 5px 1px rgba(0,0,0,0.1);
+	border: 3px solid #fff;
+	border-radius: 0.3em;
+	color: white;
+	font-size: 1.2em;
+	font-weight: bold;
 }
 
 
@@ -160,6 +195,26 @@ p.errormessage {
 }
 
 
+#listTypes {
+	padding: 0;
+	margin: 0;
+}
+
+#listTypes li {
+	padding: 1em;
+	background-color: #fff;
+	border: 1px solid #eee;
+	border-radius: 2px;
+	margin-bottom: 0.2em;
+	list-style-type: none;
+	cursor: pointer;
+}
+#listTypes li.selected {
+	background-color: #96A8B9;
+	color: white;
+}
+
+
 
 @media (max-width:480px) {	
 	body {
@@ -175,10 +230,15 @@ p.errormessage {
 	}
 	
 	#imgAngel {
-		width: 150px;
+		width: 120px;
 	}
 	
-	fieldset label {
+	fieldset,
+	.box {
+		padding: 1em;
+	}
+	
+	fieldset label.before {
 		display: block;
 		margin-top: 1em;
 	}
@@ -201,14 +261,6 @@ p.errormessage {
 
 
 button {
-	background-color: #96A8B9;
-	padding: 0.5em 1em;
-	box-shadow: 1px 2px 5px 1px rgba(0,0,0,0.1);
-	border: 3px solid #fff;
-	border-radius: 0.3em;
-	color: white;
-	font-size: 1.2em;
-	font-weight: bold;
 	cursor: pointer;
 }
 

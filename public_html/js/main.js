@@ -1,26 +1,36 @@
 
-var angels;
+var angels, types;
 
 var frmAngel = document.getElementById("frmAngel");
-frmAngel.addEventListener("submit", validateCheckout, false);
+	frmAngel.addEventListener("submit", validateCheckout, false);
 
 
 var btnChooseAngel = document.getElementById("btnChooseAngel");
-btnChooseAngel.addEventListener("click", showAngelList, false);
+	btnChooseAngel.addEventListener("click", showAngelList, false);
 
 
 var randomMessage = document.getElementById("randomMessage");
 var pAngel = document.getElementById("pAngel");
 var h4Angel = document.getElementById("h4Angel");
 var imgAngel = document.getElementById("imgAngel");
+	imgAngel.addEventListener("click", showAngelList, false);
 var angelSelect = document.getElementById("angelSelect");
 var txtAngelId = document.getElementById("txtAngelId");
+var txtTypeId = document.getElementById("txtTypeId");
+
+var totalPrice = document.getElementById("totalPrice");
+var totalText = document.getElementById("totalText");
+
+
 var listAngels = document.getElementById("listAngels");
-listAngels.addEventListener("click", angelHandler, false);
-var angelId;
+	listAngels.addEventListener("click", angelHandler, false);
+var listTypes = document.getElementById("listTypes");
+	listTypes.addEventListener("click", typeHandler, false);
+var angelId, typeId;
 
 
 loadAngels();
+loadTypes();
 
 var messages = [
 	"Älskade syster!<br>Här kommer en vacker present till en vacker prinsessa. Varje gång du bär denna så är jag med dig vart du än är..<br><br>Älskar dig :)",
@@ -40,7 +50,7 @@ var messages = [
 ];
 messages.sort(function() {return 0.5 - Math.random()})
 
-
+/*
 var tic=0;
 var ticker = setInterval(function() {
 	switch(tic) {	
@@ -62,8 +72,38 @@ var ticker = setInterval(function() {
 	
 	tic++;
 }, 1000);
+*/
 
 
+
+
+
+function loadTypes() {
+	var xhr = new XMLHttpRequest();
+	xhr.open("get", "load_types.php", true);
+	xhr.onload = typesLoaded;
+	xhr.send();	
+}
+
+
+function typesLoaded(e) {
+	if(e.target.status===200) {
+		types = JSON.parse(e.target.responseText);
+		console.log("Types loaded", types);
+		printTypes();
+	}	
+}
+
+function printTypes() {
+	listTypes.innerHTML = "";
+	for(id in types) {
+		var li = document.createElement("LI");
+		var type = types[id];
+		li.id = "type"+id;
+		li.textContent = type.type + " (+" + type.price + " kr)";
+		listTypes.appendChild(li);
+	}
+}
 
 
 
@@ -85,6 +125,7 @@ function angelsLoaded(e) {
 }
 
 function printAngels() {
+	listAngels.innerHTML = "";
 	for(id in angels) {
 		var li = document.createElement("LI");
 		li.id = "angel"+id;
@@ -108,10 +149,12 @@ function validateCheckout(e) {
 		errormessages[i].classList.add("hidden");
 	};
 	
+		
 	var inputs = frmAngel.querySelectorAll("input.required");
+	var firstInvalid;
 	for(var i=0; i<inputs.length; i++) {
 		if(inputs[i].value.trim() === "") {
-			if(!abort) {
+			if(!firstInvalid) {
 				firstInvalid = inputs[i];
 				abort = true;
 			}
@@ -144,7 +187,6 @@ function showAngelList(e) {
 
 function angelHandler(e) {
 	var target=e.target;
-	console.log("list click", target, e);
 	
 	while(target.nodeName!=="LI" && target!==listAngels) target=target.parentNode;
 	
@@ -155,6 +197,7 @@ function angelHandler(e) {
 	
 	console.log("Angel clicked", angels[id]);
 }
+
 
 function selectAngel(id) {
 	var items = listAngels.querySelectorAll("li");
@@ -168,14 +211,49 @@ function selectAngel(id) {
 	}
 	var angel = angels[id];
 	txtAngelId.value = id;
+	txtAngelId.parentElement.querySelector(".errormessage").classList.add("hidden");
 	pAngel.textContent = angel.bio;
 	h4Angel.textContent = angel.name;
 	imgAngel.src = "angels200/"+id+".jpg";
 	
 	angelSelect.style.display="none";
 	frmAngel.style.display="block";
+	updatePrice();
 }
 
+function typeHandler(e) {
+	var target=e.target;
+	console.log("type click", target, e);
+	
+	while(target.nodeName!=="LI" && target!==listTypes) target=target.parentNode;
+	
+	var id = target.id.replace("type","");
+	if(typeId!==id) selectType(id);
+}
+
+function selectType(id) {
+	var items = listTypes.querySelectorAll("li");
+	txtTypeId.value = id;
+	txtTypeId.parentElement.querySelector(".errormessage").classList.add("hidden");
+	for(var i=0; i<items.length; i++) {
+		var item = items[i];
+		if(item.id==="type"+id) {
+			item.classList.add("selected");
+		} else {
+			item.classList.remove("selected");
+		}
+	}
+	updatePrice();
+}
+
+function updatePrice() {
+	var angel = angels[txtAngelId.value];
+	var type = types[txtTypeId.value];
+	if(angel && type) {
+		totalPrice.textContent = (parseInt(angel.price) + parseInt(type.price)) + " kr";
+		totalText.textContent = "Total kostnad, inkl frakt:";
+	}
+}
 
 function fill() {
 	var angelIds = Object.keys(angels);

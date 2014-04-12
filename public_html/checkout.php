@@ -4,7 +4,20 @@ require '../includes/init.php';
 
 
 
-$totalPrice = 120;
+$angelPrice = $db->getValue("SELECT price FROM angels WHERE angel_id=?", array($_POST['angel']['id']));
+$addon = $db->getRow("SELECT type, price FROM types WHERE type_id=?", array($_POST['angel']['type_id']));
+
+$description = "Änglabud.se";
+
+$orderItems = array();
+$orderItems[] = new OrderItem("Ängel", $angelPrice*0.8, 1, 0.25, "a".$_POST['angel']['id']);
+$orderItems[] = new OrderItem($addon['type'], $addon['price']*0.8, 1, 0.25, "t".$_POST['angel']['type_id']);
+
+
+$amountToReceive = 0;
+foreach($orderItems as $item) {
+	$amountToReceive += $item->getUnitPrice() * $item->getQuantity() * (1+$item->getTaxPercentage());
+}
 
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -28,7 +41,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 		"package" => 'bag',
 		"comments" => $_POST['delivery']['other'],
 		"found" => $_POST['sender']['found'],
-		"cost" => $totalPrice
+		"cost" => $amountToReceive
 	);
 	$orderId = $db->insertArray("orders", $order);
 	$db->insert("INSERT INTO statuses(order_nr, message_id) VALUES(?,1)", array($orderId));
@@ -54,22 +67,7 @@ $senderEmail = $order['buyer_email'];
 $angelId = $order['angel_id'];
 $angelType = $order['type_id'];
 
-// URLs used by payson for redirection after a completed/canceled purchase.
 
-
-
-$description = "Änglabud.se";
-
-$artNr = "a" . $angelId . "t" . $angelType;
-
-$orderItems = array();
-$orderItems[] = new OrderItem("Änglabud", $totalPrice, 1, 0.25, $artNr);
-
-
-$amountToReceive = 0;
-foreach($orderItems as $item) {
-	$amountToReceive += $item->getUnitPrice() * $item->getQuantity() * (1+$item->getTaxPercentage());
-}
 
 $credentials = new PaysonCredentials($config['payson']['agentID'], $config['payson']['md5Key']);
 $api = new PaysonApi($credentials, $config['payson']['testAPI']);

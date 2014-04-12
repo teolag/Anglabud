@@ -11,7 +11,7 @@ $token = $_GET["TOKEN"];
 
 // Initialize the API in test mode
 $credentials = new PaysonCredentials($config['payson']['agentID'], $config['payson']['md5Key']);
-$api = new PaysonApi($credentials, TRUE);
+$api = new PaysonApi($credentials, $config['payson']['testAPI']);
 
 // Get the details about this purchase
 $detailsResponse = $api->paymentDetails(new PaymentDetailsData($token));

@@ -1,0 +1,13 @@
+
+body {
+	font-family: sans-serif;
+}
+
+
+#tableOrders {
+	width: 100%;
+}
+
+#tableOrders th {
+	text-align: left;
+}
