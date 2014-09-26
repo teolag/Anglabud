@@ -19,21 +19,24 @@ if ($detailsResponse->getResponseEnvelope()->wasSuccessful()) {
 
     // Get the payment details from the response
     $details = $detailsResponse->getPaymentDetails();
-	$orderId = $details->getTrackingId();
+	$orderNr = angel2dec($details->getTrackingId());
 	$paysonRef = $details->getPurchaseId();
 	$paysonFee = $details->getReceiverFee();
   
 	if ($details->getType() == "TRANSFER" && $details->getStatus() == "COMPLETED") {
-        $db->update("UPDATE orders SET payed='Ja', payson_ref=?, payson_fee=? WHERE order_nr=?", array($paysonRef, $paysonFee, $orderId));
-		$db->insert("INSERT INTO statuses(order_nr, message_id, payson_token) VALUES(?,2,?)", array($orderId, $token));
+        $db->update("UPDATE orders SET payed='Ja', payson_ref=?, payson_fee=? WHERE order_nr=?", array($paysonRef, $paysonFee, $orderNr));
+		$db->insert("INSERT INTO statuses(order_nr, message_id, payson_token) VALUES(?,2,?)", array($orderNr, $token));
 		$message = "Tack för din beställning";
     } elseif ($details->getType() == "INVOICE" && $details->getStatus() == "PENDING" && $details->getInvoiceStatus() == "ORDERCREATED") {
         // Handle accepted invoice purchases here
 		$message = "???";
     } else if ($details->getStatus() == "ERROR") {
-        $db->insert("INSERT INTO statuses(order_nr, message_id, payson_token) VALUES(?,6,?)", array($orderId, $token));
+        $db->insert("INSERT INTO statuses(order_nr, message_id, payson_token) VALUES(?,6,?)", array($orderNr, $token));
 		$message = "Något gick fel, kontakta info@anglabud.se för mer information";
-    }
+    } else {
+		$message = "jahaja...";
+		echo var_dump($details);
+	}
 	?>
 	
 	<?php require "header.php"; ?>

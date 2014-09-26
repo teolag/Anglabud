@@ -1,15 +1,4 @@
 <?php require "header.php"; ?>
-		
-<!--
-<ul>
-	<li>Skicka flera änglar</li>
-	<li>karta vart änglarna ska</li>
-	<li>historik sida för kunden</li>
-	<li>maila om ingen betalning</li>
-	<li>ingen statusupprepning vid reciept och ipn</li>
-	<li>testa invoice</li>			
-</ul>
--->
 
 <form id="frmAngel" action="checkout.php" method="post">
 

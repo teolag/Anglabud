@@ -23,8 +23,12 @@ if ($detailsResponse->getResponseEnvelope()->wasSuccessful()) {
     $details = $detailsResponse->getPaymentDetails();
 
     	
-	echo "<pre>";
-	print_r($details);
-	echo "</pre>";
+	require "header.php";
+	?>
+	<div class="box">
+		Beställningen avbruten
+	</div>
+	<?php
+	require "footer.php";
 }
 ?>

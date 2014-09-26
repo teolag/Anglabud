@@ -4,23 +4,16 @@ require '../includes/init.php';
 
 
 
-$angelPrice = $db->getValue("SELECT price FROM angels WHERE angel_id=?", array($_POST['angel']['id']));
-$addon = $db->getRow("SELECT type, price FROM types WHERE type_id=?", array($_POST['angel']['type_id']));
-
 $description = "Änglabud.se";
 
-$orderItems = array();
-$orderItems[] = new OrderItem("Ängel", $angelPrice*0.8, 1, 0.25, "a".$_POST['angel']['id']);
-$orderItems[] = new OrderItem($addon['type'], $addon['price']*0.8, 1, 0.25, "t".$_POST['angel']['type_id']);
 
-
-$amountToReceive = 0;
-foreach($orderItems as $item) {
-	$amountToReceive += $item->getUnitPrice() * $item->getQuantity() * (1+$item->getTaxPercentage());
-}
 
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
+	$angelPrice = $db->getValue("SELECT price FROM angels WHERE angel_id=?", array($_POST['angel']['id']));
+	$addon = $db->getRow("SELECT type, price FROM types WHERE type_id=?", array($_POST['angel']['type_id']));
+	$amountToReceive = $angelPrice + $addon['price'];
+	
 	$order = array(
 		"angel_id" => $_POST['angel']['id'],
 		"type_id" => $_POST['angel']['type_id'],
@@ -43,20 +36,26 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 		"found" => $_POST['sender']['found'],
 		"cost" => $amountToReceive
 	);
-	$orderId = $db->insertArray("orders", $order);
-	$db->insert("INSERT INTO statuses(order_nr, message_id) VALUES(?,1)", array($orderId));
-	echo "new order: " . $orderId;
+	$orderNr = $db->insertArray("orders", $order);
+	$db->insert("INSERT INTO statuses(order_nr, message_id) VALUES(?,1)", array($orderNr));
+	echo "new order: " . $orderNr;
 } elseif(isset($_GET['orderId'])) {
-	$orderId = $_GET['orderId'];
-	$order = $db->getRow("SELECT * FROM orders WHERE order_nr=?", array($orderId));
+	$orderNr = angel2dec($_GET['orderId']);
+	$order = $db->getRow("SELECT * FROM orders WHERE order_nr=?", array($orderNr));
 	if(empty($order)) {
 		die("No order with id: " . $orderId);
 	} elseif($order['payed']=="Ja") {
 		die("This order is already payed");
 	}
-	
-	
+	$angelPrice = $db->getValue("SELECT price FROM angels WHERE angel_id=?", array($order['angel_id']));
+	$addon = $db->getRow("SELECT type, price FROM types WHERE type_id=?", array($order['type_id']));
+	$amountToReceive = $angelPrice + $addon['price'];
 }
+
+
+$orderItems = array();
+$orderItems[] = new OrderItem("Ängel", $angelPrice*0.8, 1, 0.25, "a".$_POST['angel']['id']);
+$orderItems[] = new OrderItem($addon['type'], $addon['price']*0.8, 1, 0.25, "t".$_POST['angel']['type_id']);
 
 
 
@@ -85,8 +84,9 @@ $payData->setCurrencyCode(CurrencyCode::SEK);
 $payData->setLocaleCode(LocaleCode::SWEDISH);
 //$payData->setLocaleCode(LocaleCode::ENGLISH);
 $payData->setGuaranteeOffered(GuaranteeOffered::OPTIONAL);
+//$payData->setGuaranteeOffered(GuaranteeOffered::NO);
 $payData->setShowReceiptPage(false);
-$payData->setTrackingId($orderId);
+$payData->setTrackingId(dec2angel($orderNr));
 
 $payResponse = $api->pay($payData);
 if ($payResponse->getResponseEnvelope()->wasSuccessful()) {

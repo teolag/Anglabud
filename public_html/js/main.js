@@ -251,7 +251,7 @@ function updatePrice() {
 	var type = types[txtTypeId.value];
 	if(angel && type) {
 		totalPrice.textContent = (parseInt(angel.price) + parseInt(type.price)) + " kr";
-		totalText.textContent = "Total kostnad, inkl frakt:";
+		totalText.textContent = "Totalt belopp, inkl frakt:";
 	}
 }
 

@@ -50,6 +50,7 @@ var Orders = (function(){
 		
 			default:	
 		}
+		ordersToPrint = ordersToPrint.sort(sortOrders);
 		printOrders();
 		
 	},
