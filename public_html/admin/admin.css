@@ -11,3 +11,14 @@ body {
 #tableOrders th {
 	text-align: left;
 }
+
+
+#tableOrders tr:hover {
+	background-color: #DEDAFE;
+}
+
+
+dialog {
+	position: absolute;
+	top: 300px;
+}

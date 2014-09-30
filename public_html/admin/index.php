@@ -1,5 +1,10 @@
 <?php
 
+session_start();
+if(empty($_SESSION['admin'])) {
+	header("Location: /admin/login.php");
+}
+
 ?>
 
 
@@ -12,7 +17,7 @@
 		<link rel="stylesheet" href="/admin/admin.css" type="text/css" />
 	</head>
 	<body>
-	
+		<a href="/admin/logout.php">Logout</a>
 	
 		<ul id="orderFilters">
 			<li data-action="all">Alla</li>
@@ -38,7 +43,10 @@
 			<tbody></tbody>
 		</table>
 		
+		<dialog id="dialogOrder">Hej hej</dialog>
+		
 		<script src="/admin/Orders.js"></script>
+		<script src="/admin/OrderDialog.js"></script>
 		<script src="/admin/admin.js"></script>
 		
 		

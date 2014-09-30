@@ -130,7 +130,7 @@ function printAngels() {
 		var li = document.createElement("LI");
 		li.id = "angel"+id;
 		var img = document.createElement("img");
-		img.src="angels200/"+id+".jpg";
+		img.src="/img/angels200/"+id+".jpg";
 		var span = document.createElement("span");
 		span.textContent = angels[id].name;
 		
@@ -214,7 +214,7 @@ function selectAngel(id) {
 	txtAngelId.parentElement.querySelector(".errormessage").classList.add("hidden");
 	pAngel.textContent = angel.bio;
 	h4Angel.textContent = angel.name;
-	imgAngel.src = "angels200/"+id+".jpg";
+	imgAngel.src = "/img/angels200/"+id+".jpg";
 	
 	angelSelect.style.display="none";
 	frmAngel.style.display="block";

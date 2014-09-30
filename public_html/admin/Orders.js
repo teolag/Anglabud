@@ -14,6 +14,8 @@ var Orders = (function(){
 	init = function() {
 		console.log("init orders");
 		tableBody = document.querySelector("#tableOrders tbody");
+		tableBody.addEventListener("click", tableClickHandler, false);
+		
 		orderFilters = document.getElementById("orderFilters");
 		orderFilters.addEventListener("click", filterAction, false);
 	},
@@ -115,6 +117,7 @@ var Orders = (function(){
 			}
 			
 			var tr = document.createElement("TR");
+			tr.dataset.id = order.order_id;
 			
 			var td = document.createElement("TD");
 			td.textContent = ordersToPrint[i];
@@ -154,6 +157,37 @@ var Orders = (function(){
 			
 			tableBody.appendChild(tr);			
 		}
+	},
+	
+	tableClickHandler = function(e) {
+		console.log("click");
+		
+		var target = e.target;
+		while(true) {
+			switch(true) {
+				case target.nodeName==="TR":
+					var orderId = target.dataset.id;
+					console.log("open order:", orderId);
+					OrderDialog.open(orderId);
+				break;
+				case target.nodeName==="TABLE":
+					return;
+				break;
+			}
+			target = target.parentElement;
+		}	
+		
+		/*
+		användaren klickar någonstans i tabellen
+		klickat på en tr ---> bra! 
+		klickat någonstans under tr ---> kolla parent
+		klickat utanför tr ---> bryt
+		*/
+		
+		while(tr.nodeName!=="TABLE") {
+			if(tr.nodeName==="TR") break; 
+		}
+	
 	};
 	
 	
@@ -166,3 +200,4 @@ var Orders = (function(){
 
 
 }());
+
