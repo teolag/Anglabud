@@ -21,23 +21,23 @@ if ($response->isVerified()) {
     // IPN request is verified with Payson
     // Check details to find out what happened with the payment
     $details = $response->getPaymentDetails();
-	
+
 	$orderId = $details->getTrackingId();
 	$token = $details->getToken();
 	$paysonRef = $details->getPurchaseId();
 	$paysonFee = $details->getReceiverFee();
 
-    // After we have checked that the response validated we have to check the actual status 
+    // After we have checked that the response validated we have to check the actual status
     // of the transfer
     if ($details->getType() == "TRANSFER" && $details->getStatus() == "COMPLETED") {
         $db->update("UPDATE orders SET payed='Ja', payson_ref=?, payson_fee=? WHERE order_nr=?", array($paysonRef, $paysonFee, $orderId));
-		$db->insert("INSERT INTO statuses(order_nr, message_id, payson_token) VALUES(?,2,?)", array($orderId, $token));
-		
-		
+		$db->insert("INSERT INTO statuses(order_nr, message_id, payson_token, payson_ipn) VALUES(?,2,?,true)", array($orderId, $token));
+
+
     } elseif ($details->getType() == "INVOICE" && $details->getStatus() == "PENDING" && $details->getInvoiceStatus() == "ORDERCREATED") {
         // Handle accepted invoice purchases here
     } else if ($details->getStatus() == "ERROR") {
-        $db->insert("INSERT INTO statuses(order_nr, message_id, payson_token) VALUES(?,6,?)", array($orderId, $token));
+        $db->insert("INSERT INTO statuses(order_nr, message_id, payson_token, payson_ipn) VALUES(?,6,?, true)", array($orderId, $token));
     }
     /*
       //More info

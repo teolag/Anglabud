@@ -1,6 +1,6 @@
 
 body {
-	font-family: sans-serif;
+	font-family: calibri, sans-serif;
 }
 
 
@@ -21,4 +21,24 @@ body {
 dialog {
 	position: absolute;
 	top: 300px;
+}
+
+
+h3 {
+	margin: 0 0 0.3em 0;
+}
+
+.buyer, .angel, .reciever, .message, .extra {
+	padding: 1em;
+	background-color: #f2f2f2;
+	border-radius: 1em;
+	margin-bottom: 1em;
+}
+
+.angel img {
+	width: 84px;
+	float: right;
+	border-radius: 0.5em;
+	box-shadow: 0 0px 3px 0 rgba(0,0,0,0.4);
+	border: 2px solid white;
 }
