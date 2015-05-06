@@ -5,8 +5,8 @@ define("ROOT", $_SERVER['DOCUMENT_ROOT']."/../");
 
 session_start();
 require ROOT . "includes/config.php";
-require ROOT . "classes/DatabasePDO/DatabasePDO.php";
-require ROOT . "classes/PaysonAPI/lib/paysonapi.php";
+require "/git/DatabasePDO/DatabasePDO.php";
+require "/git/PaysonAPI/lib/paysonapi.php";
 
 
 $db = new DatabasePDO($config['db']['server'],$config['db']['username'],$config['db']['password'],$config['db']['name']);
